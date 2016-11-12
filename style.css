@@ -39,6 +39,51 @@ p.big {
     margin: 5px;
 }
 
+.text {
+	text-align:center; 
+	width:50;
+	color:#941414; 
+	background-color:#fdfdfd;
+	font: bold 12pt "Georgia"
+}
+
+.text2 {
+	text-align:center; 
+	width:52;
+	color:#941414; 
+	background-color:#fdfdfd;
+	font: bold 10pt "Georgia"
+}
+
+
+.text3 {
+	text-align:left; 
+	color:#941414; 
+	vertical-align:middle;
+	font: 9pt "Lucida Console";
+	font-stretch: "ultra-condensed";
+	
+}
+
+.text4 {
+	text-align:center; 
+	color:#941414; 
+	vertical-align:middle;
+	font: 9pt "Lucida Console";
+	font-stretch: "ultra-condensed";
+	
+}
+
+.text5 {
+	text-align:center; 
+	color:#921414; 
+	vertical-align:middle;
+	font: 9pt "Arial";
+	font-stretch: "ultra-condensed";
+	
+}
+
+
 .main .screenshot {
     float: left;
     border: 1px solid #c0c0c0;
