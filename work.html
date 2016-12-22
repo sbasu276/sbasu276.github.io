@@ -42,23 +42,29 @@
 					
 							<div style="margin-left:auto;margin-right:auto">
 								<p>
-								<h4>Thesis Projects</h4>
+								<h4>Research Projects</h4>
 									<ul>
 										<li><h5><b>Randomized Rounding using Random Walks (Jun,2014 &mdash; Jun,2015):</b><br>
-													Many optimization problems can be modeled as Integer Linear Programs(<b>ILP</b>). 
-													ILP is <i>NP-Hard</i>. That means it is not possible to obtain exact solution in Polynomial time. 
-													Rounding algorithms are often used to find near-optimal approximate solutions of ILP in polynomial time. 
-													An ordinary fractional solution of the problem is rounded to a integral solution. 
-													Current focus is on developing a novel rounding algorithm using Random (Brownian) Walks. 
-													The objective is to obtain a better approximation and reduce the error compared to existing methods.
+													Rounding algorithms are particularly of interest since they are often used to find near-optimal
+													approximate solutions of integer programs in polynomial time. Even though the conventional method (proposed by Raghvan and Thompson)
+													of rounding initial feasible solution of a corresponding relaxed linear program has tight error bound in the worst case, we went beyond
+													that and investigated techniques that could produce better bounds for the ‘average-case’ inputs. Our method used
+													an iterative transformation of initial solution using multidimensional random walk followed by constructive Lovász
+													Local Lemma and produced a much better error bound for average case inputs.
+													<br>
+													<a href="Thesis.pdf">Full Thesis</a> | <a href="mid.pdf">PPT</a>
 											</h5>
 										</li>
 										<li><h5><b>Design of Test Simulator for Microfluidic Biochips (Jun,2011 &mdash; May,2012):</b><br>
-													Microfluidic Biochips offer promising platform for parallel DNA analysis, automated drug discovery etc. 
-													It is important to ensure high reliability of biochps for safety-critical applications. 
-													The main focus of the work was on functional testing of Biochips. 
-													We proposed a new technique for customized testing of droplet route-paths. 
-													The test results showed promising improvements.
+													Microuidic biochips offer promising platform for parallel DNA analysis, automated drug
+													discovery etc. It is important to ensure high reliability of biochip funcitonality for safety-
+													critical applications. We proposed a new technique for functional testing of bio chips for
+													customized droplet route-paths. The average completion time for the customized testing
+													method was nearly 10-times faster than that of Parallel Scan and Peripheral Scan testing
+													methods for In-Vitro test benches. The average number of cells traversed in customized
+													testing was nearly 6-10% of the Parallel and Peripheral scanning methods.
+													<br>
+													<a href="BTP.pdf">Report</a>
 											</h5>
 										</li>
 									</ul>
@@ -66,49 +72,51 @@
 								<p>
 								<h4>Course Projects</h4>
 									<ul>
+										<li><h5><b>Feature selection for Speaker Recognition:</b><br>
+												Carried out Genetic Algorithms and PSO based feature selection using MATLAB. By using 
+												approximately 1-2% of 2000 features, we achieved 5-fold cross validation accuracy up to 92%. 
+												<br>
+												<a href="docs/speakrec.pdf">Report</a>
+											</h5>
+										</li>
+										<li><h5><b>User Level Thread Library:</b><br>
+												Developed an user level thread package with complete functionalities. 
+												The functionalities include create,delete,sleep,switch etc. A Round-Robin scheduler is also implemented.
+												<br>
+												<a href="">Code</a> | <a href="thread_lib.pdf">Readme</a>
+											</h5>
+										</li>
 										<li><h5><b>Lexical Analyzer tool:</b><br>
 												The objective was to develop a lexical analyzer tool that will produce lexemes for a given input program and grammar rules. 
+												<br>
+												<a href="">Code</a> | <a href="">Readme</a>
 											</h5>
 										</li>
 										<li><h5><b>Automated Document Classifier:</b><br>
 												Developed a <i>Bayesian Classfier</i> that could classify 8 different type of news paper articles. It achieved up to 96% accuracy.
+												<br>
+												<a href="">Code</a>
 											</h5>
 										</li>
 										<li><h5><b>Pentium-II Pipeline Simulation:</b><br>
 												Added the pentium-II Out-of-Order pipeline engine to <i>Tejas</i> (a high performance simulator made by IIT Delhi students).
 											</h5>
 										</li>
-										<li><h5><b>User Level Thread Library:</b><br>
-												Developed an user level thread package with complete functionalities. The functionalities include create,delete,sleep,switch etc. A Round-Robin scheduler is also implemented.
-											</h5>
-										</li>
 										<li><h5><b>Natural Language Query Processor:</b><br>
-												Written the query processor in Prolog. The database used was a simple student database. The processor could recognize general English language queries like 'In which department does Mr. ABC study' and respond correctly. 
+												Written the query processor in Prolog. The database used was a simple student database. The processor could recognize general 
+												English language queries like 'In which department does Mr. ABC study' and respond correctly.
+												<br>
+												<a href="">Code</a> | <a href="README_NLQP.txt">Readme</a>
 											</h5>
 										</li>
 										<li><h5><b>SIC/XE Assembler:</b><br>
-												Simplified Instructional Computer(SIC) is a hypothetical architecture that was used by Leland Beck in his book 'System Software' to explain the concepts of assemblers, compilers and operating systems. SIC/XE,(the XE stands for Extra Equipment), is an extension of SIC which has higher memory, greater number of registers and additional instructions. The task of the assembler was to convert the nmemonics and symbolic operands to their machine codes and finally write the object program in HEX code.
-											</h5>
-										</li>
-										<li><h5><b>Database application for Cricket Tournament:</b><br>
-												This desktop application accepted queries through UI and returns answer after performing a SQL query on the backend database. 
-											</h5>
-										</li>
-									</ul>
-								</p>
-								<p>
-								<h4>Other Projects</h4>
-									<ul>
-										<li><h5><b>Text Editor Software:</b><br>
-												A text editor for small scale office use. 
-											</h5>
-										</li>
-										<li><h5><b>Flowchart Generator:</b><br>
-												Generates flowchart for C-programs. For simplicity, only a subset of C-grammar was used.
-											</h5>
-										</li>
-										<li><h5><b>Multiplayer Car Racing Game:</b><br>
-												A LAN game developed using OpenGL. 
+												Simplified Instructional Computer(SIC) is a hypothetical architecture that was used by Leland Beck in his book 'System Software' 
+												to explain the concepts of assemblers, compilers and operating systems. SIC/XE,(the XE stands for Extra Equipment), is an extension 
+												of SIC which has higher memory, greater number of registers and additional instructions. The task of the assembler was to convert 
+												the nmemonics and symbolic operands to their machine codes and finally write the object program in HEX code.
+												<br>
+												<a href="">Code</a> | <a href="README_SIC.txt">Readme</a>
+
 											</h5>
 										</li>
 									</ul>
