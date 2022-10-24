@@ -1,0 +1,284 @@
+
+<!-- saved from url=(0037)http://cnnlocalization.csail.mit.edu/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>GBCNet-IITD</title>
+
+<script async="" src="./gbcnet-iitd/analytics.js.download"></script><script type="text/javascript" src="./gbcnet-iitd/jquery.mlens-1.0.min.js.download"></script>
+<script type="text/javascript" src="./gbcnet-iitd/jquery.js.download"></script>
+<style>
+body
+{
+    font-family : Arial;
+	background-color : #111;
+}
+.content
+{
+    width : 800px;
+    padding : 25px 50px;
+    margin : 25px auto;
+    background-color : #fff;
+    box-shadow: 0px 0px 10px #999;
+    border-radius: 15px; 
+}
+
+.contentblock
+{
+    width : 950px;
+    margin : 0 auto;
+    padding : 0;
+    border-spacing : 25px 0;
+}
+
+.contentblock td
+{
+    background-color : #fff;
+    padding : 25px 50px;
+    vertical-align : top;
+    box-shadow: 0px 0px 10px #999;
+    border-radius: 15px; 
+}
+
+a, a:visited
+{
+    color: #224b8d;
+}
+
+#authors
+{
+    text-align : center;
+    margin-bottom : 20px;
+}
+
+#conference
+{
+    text-align : center;
+    margin-bottom : 20px;
+    font-style : italic;
+}
+
+#authors a 
+{
+    margin : 0 10px;
+}
+
+h1
+{
+    text-align : center;
+    font-family : Arial;
+    font-size : 20px;
+}
+
+code
+{
+	display : block;
+	padding : 10px;
+	margin : 10px 10px;
+}
+p code
+{
+    display : inline;
+    padding : 0;
+    margin : 0;
+}
+#teasers
+{
+    margin : 0 auto;    
+}
+
+#teasers td
+{
+    margin : 0 auto;
+    text-align : center;
+    padding : 5px;
+}
+
+#teasers img
+{
+    width : 250px; 
+}
+
+#results img
+{
+    width : 133px;
+}
+
+#seeintodark {
+    margin : 0 auto;
+}
+
+#sift 
+{
+    margin : 0 auto;
+}
+
+#sift img
+{
+    width : 250px;
+}
+
+.downloadpaper 
+{
+    padding-left : 20px;
+    float : right;
+    text-align : center;
+}
+
+.downloadpaper a 
+{
+    font-weight : bold;
+    text-align : center;
+}
+
+#demoframe
+{
+    border : 0;
+    padding : 0;
+    margin : 0;
+    width : 100%;
+    height : 340px;
+}
+
+#feedbackform
+{
+    border : 1px solid #ccc;
+    margin : 0 auto;
+    border-radius : 15px;
+}
+
+#eyeglass {
+    height : 530px;
+}
+
+#eyeglass #wrapper {
+    position: relative;
+    height: auto;
+    margin: 0 auto;
+    float: left;
+    width : 800px;
+}
+
+#mitnews
+{ 
+    font-weight : normal;
+    margin-top : 20px;
+    font-size : 12px;
+    width : 220px;
+}
+
+#mitnews a {
+    font-weight : normal;
+}
+</style>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-23931362-6', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+</head>
+
+<body data-new-gr-c-s-check-loaded="14.1039.0" data-gr-ext-installed="">
+
+<div class="content">
+
+<h1>Surpassing the Human Accuracy: Detecting Gallbladder Cancer from USG Images with Curriculum Learning</h1>
+<p id="authors">
+<a href="https://www.cse.iitd.ac.in/~soumen">Soumen Basu</a><sup>a </sup> 
+<a href=mailto:mayank.gupta@cse.iitd.ac.in>Mayank Gupta</a><sup>a </sup> 
+<a href=mailto:pratyaksha_25@yahoo.in>Pratyaksha Rana</a><sup>b </sup> 
+<a href=mailto:pankajgupta959@gmail.com>Pankaj Gupta</a><sup>b </sup> 
+<a href="https://www.cse.iitd.ac.in/~chetan">Chetan Arora</a><sup>a </sup> 
+<br>
+<br>
+<sup> a </sup> Indian Institute of Technology, Delhi <br>
+<sup> b </sup> Post Graduate Institute of Medical Education and Research, Chandigarh
+</p>
+
+<div class="downloadpaper">
+<a href="./gbcnet-iitd/arch-compact.jpg"><img src="./gbcnet-iitd/arch-compact.jpg" width="400px" border="2"></a>
+</div>
+
+<p>In this work, we explore the potential of CNN-based models for gallbladder cancer (GBC) detection from ultrasound sonography (USG) images as no prior study is known. USG is the most common diagnostic modality for GBC detection due to its low cost and accessibility. However, USG images are challenging to analyze due to low image quality, noise, and varying viewpoints due to the handheld nature of the sensor. Our exhaustive study of state-of-the-art (SOTA) image classification techniques for the problem reveals that they often fail to learn the salient GB region due to the presence of shadows in the USG images. SOTA object detection techniques also achieve low accuracy because of spurious textures due to noise or adjacent organs. We propose GBCNet to tackle the challenges in our problem. GBCNet first extracts the regions of interest (ROIs) by detecting the GB (and not cancer), and then uses a new multi-scale, second-order pooling architecture specializing in classifying GBC. To effectively handle spurious textures, we propose a curriculum inspired by human visual acuity, which reduces the texture biases in GBCNet. Experimental results demonstrate that GBCNet significantly outperforms SOTA CNN models, as well as even the expert radiologists. 
+</p>
+
+<p><strong><a href="https://github.com/sbasu276/GBCNet" target="_blank">Source code and pre-trained models</a></strong></p>
+
+<p><strong><a href="https://github.com/sbasu276/GBCNet" target="_blank">Paper</a></strong></p>
+
+
+<br clear="all">
+</div>
+
+
+<div class="content" id="overview">
+
+<h2>Overview</h2>
+
+<div class="downloadpaper">
+<a href="./gbcnet-iitd/teaser.png"><img src="./gbcnet-iitd/teaser.png" width="200px" border="2"></a>
+</div>
+
+<p>(a), (b), and (c) Normal, benign, and malignant GB sample in USG images, respectively. While normal or benign GB have regular anatomy, clear boundary is absent in malignant GB. 
+<br>
+(d) A malignant (biopsy-proven) GB sample. (e) Shadows having visual traits of a GB leads to localization error in ResNet50. (f) GBCNet tackles shadow artifacts well. 
+<br>
+(g) Another sample of a malignant GB. (h) The radiologist incorrectly diagnosed the GB as benign based on the stone and wall thickening. (i) GBCNet helps the radiologist to identify the salient region with liver infiltration by the GB, a critical feature of GBC, and correct the prediction.
+
+</p>
+
+</div>
+
+<div class="content" id="vis">
+
+<h2>Grad-CAM Visuals</h2>
+
+<p align="center"><img src="./gbcnet-iitd/cam.png" width="450px"> </p>
+
+<p>
+VGG16, ResNet50, and Inception-V3 focus on the shadow or the echogenic area, and mostly fail to detect GBC. GBCNet accurately focuses on the malignant GB region and detects GBC.
+</p>
+
+</div>
+
+<div class="content" id="res">
+
+<h2>Key Results</h2>
+
+<p align="center"><img src="./gbcnet-iitd/res.png" width="450px"> </p>
+<p>
+Dataset comprises of 1255 images, collected from 218 patients. The test set contains 122 images. We perform 10-fold cross validation to assert generalizability of the results. 
+</p>
+</div>
+
+
+
+
+
+
+<!--div class="content" id="references">
+
+<h2>Reference</h2>
+
+<p>B. Zhou, A. Khosla, A. Lapedriza, A. Oliva, and A. Torralba. Learning Deep Features for Discriminative Localization. CVPR'16 (arXiv:1512.04150, 2015).</p>
+
+<code>
+@article{zhou2015cnnlocalization,<br>
+&nbsp;&nbsp;title={{Learning Deep Features for Discriminative Localization.}},<br>
+&nbsp;&nbsp;author={Zhou, B. and Khosla, A. and Lapedriza. A. and Oliva, A. and Torralba, A.},<br>
+&nbsp;&nbsp;journal={CVPR},<br>
+&nbsp;&nbsp;year={2016}<br>
+}
+</code>
+
+<p>Acknowledgement: <br>This work was supported by NSF grant IIS-1524817, and by a Google faculty research award to A.T.</p>
+
+<p></p><center><a href="https://accessibility.mit.edu/"><b>Accessibility</b></a></center><p></p>
+</div-->
+
+</body>
+</html>
