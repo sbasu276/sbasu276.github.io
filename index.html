@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<head>
+<!-- The title tag is also shown in browser's tab-->
+<link rel="stylesheet" href="mystyle.css">
+<title>Soumen Basu</title>
+<style>
+body {
+  font-family: "Lato", sans-serif;
+  font-size: 14px;
+}
+
+.blink {
+    text-decoration: blink;
+    color: #1c87c9;
+    font-size: 12px;
+    font-weight: bold;
+    font-family: sans-serif;
+}
+
+.sidenav {
+  height: 100%;
+  width: 240px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 20px;
+  color: #f1f1f1;
+  font-size: 16px;
+  text-align: center;
+}
+
+.sidenav img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.sidenav h2 {
+	text-align: center;
+	margin-left: auto;
+    margin-right: auto;
+	font-size: 20px;
+}
+
+.sidenav p {
+	text-align: center;
+	margin-left: auto;
+    margin-right: auto;
+    font-size: 16px;
+}
+
+
+.sidenav a {
+  padding: 6px 8px 6px 40px;
+  text-align: left;
+  text-decoration: none;
+  font-size: 16px;
+  color: #818181;
+  display: block;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.main {
+  margin-left: 240px; /* Same as the width of the sidenav */
+  font-size: 14px; /* Increased text to enable scrolling */
+  padding: 0px 10px;
+}
+
+h2 {
+	font-size: 20px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 12px;}
+  .sidenav a {font-size: 12px;}
+}
+</style>
+</head>
+
+
+<body>
+<div class="sidenav">
+	<p>
+	<img padding="6px 8px 6px 16px" src="pic_sb_1_circ.png" width="160" >
+	<h2>Soumen Basu</h2>
+	</p>
+	<p>
+	PhD Scholar, IIT Delhi <br>
+	</p>
+	<!--table>
+	<tr><td><bold>Email:</bold> <a color="#f1f1f1" href=mailto:soumen.basu@cse.iitd.ac.in>soumen.basu@cse.iitd.ac.in</td> </tr>
+	<tr><td><bold>Phone:</bold> +91 90515 01506</td> </tr>
+	</table -->
+  <a href="#about">About Me</a>
+  <a href="#research">Research</a>
+  <a href="#publication">Publications</a>
+  <a href="#activity">Recent Updates</a>
+  <a href="#teaching">Teaching</a>
+  <a href="#others">Others</a>
+</div>
+
+<div class="main">
+	<h2>Contact</h2>
+	<table>
+	<tr><td><bold>Email:</bold> </td> <td> soumen (dot) basu (at) cse (dot) iitd (dot) ac (dot) in </td></tr>
+	<tr><td><bold>Phone:</bold>  </td> <td> +91 905 150 1506</td> </tr>
+	<tr><td><bold>Office:</bold>  </td> <td> II-A 405 (Bharti), Graphics and Vision Lab, IIT Delhi, 110016 </td></tr>
+    <tr><td><bold>Social Media:</bold>  </td> <td> <a href="https://www.linkedin.com/in/basusoumen">LinkedIn</a> &nbsp; 
+            <a href="https://scholar.google.com/citations?user=RPj75XMAAAAJ&hl=en">Google Scholar</a> </td></tr>
+	</tr>
+	</table>
+	<hr>
+	<h2 id="about">
+	About Me
+	</h2>
+	<p>
+	I am a graduate student and <i>Prime Minister's Research Fellow </i> in the Department of Computer Science at Indian Institute of Technology, Delhi. My primary research interest is in Computer Vision and Deep Learning. I am particularly interested in developing accurate, explainable, and geenralizable Vision systems for healthcare related tasks such as medical image analysis.
+	</p>
+	<p>
+	Prior to joining the Ph.D. program at IIT Delhi, I have worked as a Member of Technical Staff at Adobe systems (Bangalore, India) and as a Research Assistant at The Pennsylvania State University (State College, USA). I completed my Masters from IIT Delhi in 2015 and my Bachelors from IIEST Shibpur in 2012. I achieved All India Rank 99 out of 224160 candidates (99.96 percentile) in GATE 2013 (Computer Science).
+	</p>
+	<hr>
+	<!-- this is an h2 heading, largest-->
+	<h2 id="research">
+	Research	
+	</h2>
+	<p>
+	My research in IIT Delhi specifically aims to tackle the problem of Gallbladder Cancer (GBC) detection from abdominal ultrasound (USG) images. Through my research, I expect to develop the automated processing of USG images in general and understand the objective characterization of gallbladder malignancy in USG images. Gallbladder cancer is an important problem for Indian population. <!--It's one of the leading causes of cancer-related deaths in Indian women. -->In the Northern parts of India, the incidence rate is comparable to the global highest. GBC causes about 165,000 deaths every year, worldwide. The disease is often detected late and has an average survival duration of only six months. AI-assisted detection of gallbladder malignancy signs in USG would result in early detection and ameliorate the bleak survival scenario. Following are some of my works.
+	</p>
+	<hr>
+	<p>
+	<h2 id="publication">
+	Publications
+	</h2>
+	<ul style="list-style-type:square;">
+	<li> 
+		<b>Surpassing the Human Accuracy: Detecting Gallbladder Cancer from USG Images with Curriculum Learning </b>
+		<br>
+        Soumen Basu, Mayank Gupta, Pratyaksha Rana, Pankaj Gupta, and Chetan Arora
+        <br>
+        IEEE International Conference on Computer Vision and Pattern Recognition (CVPR), June 2022.
+        <br>
+        [&nbsp;<a href="https://openaccess.thecvf.com/content/CVPR2022/papers/Basu_Surpassing_the_Human_Accuracy_Detecting_Gallbladder_Cancer_From_USG_Images_CVPR_2022_paper.pdf">Paper</a>, &nbsp;<a href="https://gbc-iitd.github.io/gbcnet">Webpage</a> &nbsp;]  
+	</li> 
+	<br>
+	<li> 
+        <b> Unsupervised Contrastive Learning of Image Representations from Ultrasound Videos using Hard Negative Mining</b>
+		<br>
+        Soumen Basu, Somanshu Singla, Mayank Gupta, Pratyaksha Rana, Pankaj Gupta, and Chetan Arora
+        <br>
+        25th International Conference on Medical Image Computing and Computer Assisted Intervention (MICCAI), September 2022.
+        <br>
+        [&nbsp;<a href="https://arxiv.org/pdf/2207.13148.pdf">Paper</a>, &nbsp;<a href="https://gbc-iitd.github.io/usucl">Webpage</a>&nbsp;]
+	</li>
+    <br>
+	<li> 
+		<b>RadFormer: Explaining Gallbladder Cancer like a Radiologist using a Dual Attention Transformer and Local Bag-of-Features </b>
+		<br>
+        Soumen Basu, Mayank Gupta, Pratyaksha Rana, Pankaj Gupta, and Chetan Arora
+        <br>
+        Pre-print
+        <br>
+        [&nbsp;<a href="#publication">Paper</a>, &nbsp;<a href="#publication">Webpage</a>&nbsp;] (Coming soon)
+	</li>
+    <br>
+	<!--b>Efficient Algorithms for Operating Systems</b> <br>NSF - Computational Mathematics Program (DMS-1702222 PI). 2017-2020-->
+
+	</ul>
+	</p>
+
+	<hr>
+	<!--h2  id="publication">
+	Publications
+	</h2>
+	<ol>
+	<li> J. Doe, J. Mayer, <i>Stochastic Gradient Descent Algorithm for Crazy People,</i>
+	Communications in Computational Physics, to appear</li>
+	<li>P. Jones, J. Doe and X. Xi,<i> Hierarchical Optimization for Optimal Filtering of Diffusion Processes,</i>
+	International Journal for Uncertainty Quantification, 213(5), pp. 1500-1607, 2016.</li>
+	<li>J. Doe, S. Smith and P. Jones, <i>Adaptive Meshfree Backward SDE Filter and Its Applications in Material Sciences,</i>
+	 Proceedings of Microscopy and Microanalysis, (27), 589-618, 2020</li>
+	</ol>
+	<hr-->
+	<h2 id="activity">
+	Recent Updates
+	</h2>
+	<ul style="list-style-type:circle;">
+        <li> Received MICCAI student travel award! </li>
+        <li> Contrastive Learning is accepted for publication in MICCAI 2022! (Acceptance Rate: ~31%) </li>
+        <li> Received CVPR DEI travel grant! </li>
+        <li> GBCNet is published in IEEE/CVF CVPR 2022! (Acceptance Rate: ~25%) </li>
+        <li> Attended UCL Medical Image Computing Summer School (MedICSS), London, 2021 (Nominated by the Department, sponsored by IIT Delhi) </li>
+		<li> Received the Pime Minister's Research Fellowship, Government of India, December 2020 </li>
+		<li> Winner (2<sup>nd</sup> Position) in ICVGIP-2020 Object Detection Challenge </li>
+		<li> Attended ICVGIP, 2020, hosted by IIT Jodhpur</li>
+		<li> Attended Amazon Research Day, 2020 (Virtual)</li>
+		<li> Attended ICML, 2020 (Virtual)</li>
+		<!--li> Runner-up in Xerox Innovation Challenge (IIT Delhi, 2014) </li-->
+	</ul>
+	<hr>
+	<h2 id="teaching">
+	Teaching
+	</h2>
+	<p> I have been a Teaching Assistant to the following courses. My responsibilities involved conducting lab sessions, assignment design, grading the assignments and exams.  
+	</p>
+	<ul style="list-style-type:circle;">
+    <li> Cloud Computing Fundamentals (COL 733) </li>
+            <li>Computer Vision (COL 780) </li>
+            <li>Intro. to Computing (COL 100) </li>
+	<li>Artificial Intelligence (COL 671) </li>
+	<li>Software Engineering (COL 740) </li>
+	<li>Data Structures and Algorithms (COL 106) </li>
+	</ul>
+	<hr>
+	<h2 id="others">
+	Others
+	</h2>
+	<ul style="list-style-type:circle;">
+		<li> <a href="https://www.cse.iitd.ac.in/~soumen/vision-lab/instructions.html">Instructions for using Vision Lab resources</a> </li>
+        <li> <a href="https://www.cse.iitd.ac.in/~soumen/misc/report-iitd-cse.zip">Template for Dissertation (CSE, IITD)</a> </li>
+	</ul>
+	</p>
+</div>
+
+</body>
+</html>
+
+
