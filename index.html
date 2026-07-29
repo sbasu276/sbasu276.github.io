@@ -1,414 +1,803 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
-<!-- The title tag is also shown in browser's tab-->
-<link rel="stylesheet" href="mystyle.css">
-<title>Soumen Basu</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dr. Soumen Basu — Computer Vision &amp; Medical Image Analysis</title>
+<meta name="description" content="Dr. Soumen Basu, Assistant Professor, Department of Artificial Intelligence, IIT Kharagpur. Computer Vision, Medical Image Analysis, Label-Efficient &amp; Trustworthy AI for healthcare.">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-body {
-  font-family: "Lato", sans-serif;
-  font-size: 14px;
+
+/* ============================= TOKENS ============================= */
+:root{
+  --paper:      #f6f5f0;
+  --paper-raised:#ffffff;
+  --ink:        #161c2c;
+  --ink-70:     rgba(22,28,44,.72);
+  --ink-45:     rgba(22,28,44,.46);
+  --line:       #dcd9cf;
+  --line-soft:  #e9e7de;
+  --teal:       #0e6b58;
+  --teal-dim:   #0e6b5814;
+  --rust:       #9c4221;
+  --rust-dim:   #9c422114;
+  --radius:     2px;
+  --maxw:       1040px;
+  --serif:      'Newsreader', Georgia, serif;
+  --sans:       'IBM Plex Sans', -apple-system, Segoe UI, sans-serif;
+  --mono:       'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace;
 }
 
-.blink {
-    text-decoration: blink;
-    color: #1c87c9;
-    font-size: 12px;
-    font-weight: bold;
-    font-family: sans-serif;
+*{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; scroll-padding-top:76px; }
+@media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } }
+
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
 }
 
-.sidenav {
-  height: 100%;
-  width: 240px;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  background-color: #111;
-  overflow-x: hidden;
-  padding-top: 20px;
-  color: #f1f1f1;
-  font-size: 16px;
-  text-align: center;
+a{ color:var(--rust); text-decoration:none; }
+a:hover{ text-decoration:underline; }
+a:focus-visible, button:focus-visible, summary:focus-visible{
+  outline:2px solid var(--rust); outline-offset:3px;
 }
 
-.sidenav img {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+img{ max-width:100%; display:block; }
+
+.wrap{ max-width:var(--maxw); margin:0 auto; padding:0 28px; }
+
+/* ============================= MONO TAG (signature echo) ============================= */
+.tag{
+  font-family:var(--mono);
+  font-size:12px;
+  letter-spacing:.06em;
+  color:var(--rust);
+  white-space:nowrap;
+}
+.tag::before{ content:"["; margin-right:2px; }
+.tag::after{ content:"]"; margin-left:2px; }
+.tag.rust{ color:var(--rust); }
+.tag.muted{ color:var(--ink-45); }
+
+.eyebrow{
+  display:flex; align-items:center; gap:10px;
+  margin-bottom:14px;
+}
+.eyebrow .tag{ font-size:22px; }
+.eyebrow .rule{ height:2px; flex:1; background:var(--line); }
+
+h1,h2,h3{ font-family:var(--serif); font-weight:500; margin:0; color:var(--ink); }
+
+.section{ padding:88px 0; border-bottom:1px solid var(--line-soft); }
+.section:last-of-type{ border-bottom:none; }
+h2.title{ font-size:clamp(26px,3.4vw,34px); letter-spacing:-.01em; }
+.lede{ font-size:17px; color:var(--ink-70); max-width:62ch; }
+
+/* ============================= NAV ============================= */
+.nav{
+  position:fixed; top:0; left:0; right:0; z-index:50;
+  background:rgba(246,245,240,.86);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);
+}
+.nav-inner{
+  max-width:var(--maxw); margin:0 auto; padding:0 0px;
+  height:60px; display:flex; align-items:center; justify-content:space-between;
+  gap:18px;
+}
+.nav-name{ font-family:var(--mono); font-size:32px; font-weight:700; letter-spacing:.02em; }
+.nav-links{ display:flex; gap:22px; list-style:none; margin:0; padding:0; align-items:left; }
+.nav-links a{ color:var(--ink-70); font-size:20px; font-weight: 300;}
+.nav-links a:hover{ color:var(--rust); text-decoration:none; }
+.nav-links .highlight-tab {
+  color: var(--rust);
+  font-weight: 300;
+  border-bottom: 2px solid var(--rust);
+  padding-bottom: 2px;
+}
+.nav-toggle{ display:none; }
+
+@media (max-width:760px){
+  .nav-links{ display:none; }
 }
 
-.sidenav h2 {
-	text-align: center;
-	margin-left: auto;
-    margin-right: auto;
-	font-size: 20px;
+/* ============================= HERO ============================= */
+.hero{
+  padding:150px 0 56px;
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  gap:56px;
+  align-items:center;
+}
+.hero-eyebrow{
+  font-family:var(--mono); font-size:22px; color:var(--ink);
+  letter-spacing:.03em; margin-bottom:22px;
+}
+.hero h1{
+  font-size:clamp(30px,4vw,48px);
+  line-height:1.02;
+  letter-spacing:-.015em;
+}
+.hero .role{
+  font-family:var(--serif); font-style:italic; font-weight:400;
+  font-size:clamp(19px,2.1vw,23px);
+  color:var(--rust);
+  margin-top:16px;
+}
+.hero-meta{
+  display:flex; align-items:center; gap:8px;
+  margin-top:16px;
+  font-family:var(--mono); font-size:15px; color:var(--ink); letter-spacing:.02em;
+}
+.hero-meta svg{ width:15px; height:15px; color:var(--rust); flex:none; }
+.hero p.thesis{
+  margin-top:22px; font-size:17px; color:var(--ink-70); max-width:52ch;
 }
 
-.sidenav p {
-	text-align: center;
-	margin-left: auto;
-    margin-right: auto;
-    font-size: 16px;
+/* ============================= ALERT / ANNOUNCEMENT ============================= */
+.alert-wrap{ padding:0 0 12px; }
+.alert-box{
+  background:var(--rust-dim);
+  border-left:4px solid var(--rust);
+  border-radius:0 4px 4px 0;
+  padding:18px 22px;
+  display:flex; align-items:flex-start; gap:12px; flex-wrap:wrap;
+  font-size:15px; color:var(--ink);
+}
+.alert-box .alert-icon{ font-size:19px; line-height:1.4; flex:none; }
+.alert-box strong{ color:var(--rust); }
+.alert-box a{ font-family:var(--mono); font-size:13px; white-space:nowrap; color:var(--rust); }
+.hero-cta{ margin-top:34px; display:flex; flex-wrap:wrap; gap:12px; }
+.btn{
+  font-family:var(--mono); font-size:13px; letter-spacing:.01em;
+  padding:11px 18px; border:1px solid var(--ink); border-radius:var(--radius);
+  color:var(--ink); background:transparent;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.btn:hover{ background:var(--ink); color:var(--paper); text-decoration:none; }
+.btn.primary{ background:var(--rust); border-color:var(--rust); color:#fff; }
+.btn.primary:hover{ background:#0a4f41; border-color:#0a4f41; }
+.btn svg { width: 16px; height: 16px; }
+
+/* portrait bracket frame — signature element */
+.portrait-wrap{ position:relative; width:min(300px,80%); margin:0 auto; }
+.bracket{ position:relative; padding:22px; }
+.bracket::before,.bracket::after,
+.bracket .c2::before,.bracket .c2::after{
+  content:""; position:absolute; width:26px; height:26px; border:2px solid var(--ink);
+}
+.bracket::before{ top:0; left:0; border-right:none; border-bottom:none; }
+.bracket::after{ bottom:0; right:0; border-left:none; border-top:none; }
+.bracket .c2::before{ top:0; right:0; border-left:none; border-bottom:none; }
+.bracket .c2::after{ bottom:0; left:0; border-right:none; border-top:none; }
+.portrait-img{
+  width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:50%;
+  filter:grayscale(.15);
+}
+.portrait-cap{
+  text-align:center; margin-top:16px; font-family:var(--mono);
+  font-size:12px; color:var(--ink-45); letter-spacing:.04em;
+}
+.portrait-cap b{ color:var(--rust); font-weight:500; }
+
+/* ============================= ABOUT ============================= */
+.about-grid{ display:grid; grid-template-columns:1.5fr 1fr; gap:56px; }
+.about-grid p{ margin:0 0 16px; color:var(--ink-70); max-width:60ch; }
+.about-grid p:last-child{ margin-bottom:0; }
+.facts{ list-style:none; margin:0; padding:0; border-top:1px solid var(--line); }
+.facts li{
+  display:grid; grid-template-columns:96px 1fr; gap:14px;
+  padding:13px 0; border-bottom:1px solid var(--line);
+  font-size:14px; align-items:baseline;
+}
+.facts .k{ font-family:var(--mono); font-size:11px; color:var(--ink-45); letter-spacing:.05em; text-transform:uppercase; }
+.facts .v{ color:var(--ink); }
+
+/* ============================= PILLARS ============================= */
+.pillars-head{ display:grid; grid-template-columns:1.3fr .9fr; gap:48px; align-items:end; margin-bottom:44px; }
+.pillar-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--line); border:1px solid var(--line); }
+.pillar{ background:var(--paper-raised); padding:30px 30px 32px; }
+.pillar-top{ display:flex; align-items:baseline; gap:12px; margin-bottom:14px; }
+.pillar h3{ font-size:18px; font-weight:600; font-family:var(--sans); }
+.pillar p{ margin:0; color:var(--ink-70); font-size:14.5px; }
+
+.evidence{
+  margin-top:44px; display:grid; grid-template-columns:1fr 1.4fr; gap:36px; align-items:center;
+  background:var(--paper-raised); border:1px solid var(--line); padding:26px;
+}
+.evidence img{ border:1px solid var(--line); }
+.evidence .cap-title{ font-size:15px; font-weight:600; margin-bottom:8px; }
+.evidence .cap-body{ font-size:14px; color:var(--ink-70); }
+
+/* ============================= PUBLICATIONS ============================= */
+.pub{
+  padding:22px 0; border-bottom:1px solid var(--line);
+  display:grid; grid-template-columns:120px 1fr; gap:20px;
+}
+.pub:first-of-type{ border-top:1px solid var(--line); }
+.pub .venue{ font-family:var(--mono); font-size:14px; color:var(--ink); padding-top:3px; }
+.pub h4{ margin:0 0 6px; font-size:16.5px; font-weight:600; font-family:var(--sans); line-height:1.35; }
+.pub .authors{ font-size:13.5px; color:var(--ink-70); margin-bottom:8px; }
+.pub .authors b{ color:var(--ink); font-weight:600; }
+.pub .links a{ font-family:var(--mono); font-size:12px; margin-right:16px; }
+
+@media (max-width:640px){
+  .pub{ grid-template-columns:1fr; gap:6px; }
 }
 
+/* ============================= RECOGNITION ============================= */
+.badges{ display:flex; flex-wrap:wrap; gap:10px; }
+.badge{
+  border:1px solid var(--line); background:var(--paper-raised);
+  padding:10px 16px; font-size:13.5px; display:flex; gap:10px; align-items:baseline;
+}
+.badge .tag{ font-size:11px; }
 
-.sidenav a {
-  padding: 6px 8px 6px 40px;
-  text-align: left;
-  text-decoration: none;
-  font-size: 16px;
-  color: #818181;
-  display: block;
+/* ============================= TIMELINE ============================= */
+.timeline{ position:relative; padding-left:26px; }
+.timeline::before{ content:""; position:absolute; left:4px; top:6px; bottom:6px; width:1px; background:var(--line); }
+.tl-item{ position:relative; padding:0 0 20px 20px; }
+.tl-item::before{
+  content:""; position:absolute; left:-3px; top:6px; width:7px; height:7px;
+  background:var(--paper); border:2px solid var(--rust); border-radius:50%;
+}
+.tl-item .date{ font-family:var(--mono); font-size:12px; color:var(--rust); margin-right:10px; }
+.tl-item .txt{ font-size:14.5px; color:var(--ink-70); }
+details.more{ margin-top:6px; }
+details.more summary{
+  cursor:pointer; font-family:var(--mono); font-size:13px; color:var(--rust);
+  padding:8px 0 0 20px; list-style:none;
+}
+details.more summary::-webkit-details-marker{ display:none; }
+details.more summary::before{ content:"+ "; }
+details.more[open] summary::before{ content:"– "; }
+
+/* ============================= TEACH/SERVICE ============================= */
+.two-col{ display:grid; grid-template-columns:1fr 1fr; gap:56px; }
+.plain-list{ list-style:none; margin:0; padding:0; }
+.plain-list li{
+  padding:9px 0; border-bottom:1px solid var(--line-soft); font-size:14.5px; color:var(--ink-70);
+  display:flex; justify-content:space-between; gap:12px;
+}
+.plain-list li .yrs{ font-family:var(--mono); font-size:12px; color:var(--ink-45); white-space:nowrap; }
+
+/* ============================= JOIN CTA ============================= */
+.join{
+  background:var(--ink); color:var(--paper);
+  padding:70px 0;
+}
+.join .wrap{ display:grid; grid-template-columns:1.4fr .6fr; gap:40px; align-items:center; }
+.join h2{ color:#fff; font-size:clamp(24px,3vw,32px); }
+.join p{ color:rgba(246,245,240,.75); max-width:56ch; margin-top:14px; font-size:15.5px; }
+.join .btn{ border-color:var(--paper); color:var(--paper); white-space:nowrap; }
+.join .btn:hover{ background:var(--paper); color:var(--ink); }
+
+/* ============================= FOOTER ============================= */
+footer{ padding:56px 0 70px; }
+.foot-grid{ display:grid; grid-template-columns:1.2fr 1fr; gap:40px; }
+.foot-grid h3{ font-size:15px; font-family:var(--sans); font-weight:600; margin-bottom:14px; }
+.foot-list{ list-style:none; margin:0; padding:0; font-size:14.5px; }
+.foot-list li{ margin-bottom:8px; color:var(--ink-70); display: flex; align-items: center; gap: 8px; }
+.foot-list li svg { width: 14px; height: 14px; }
+.foot-note{
+  margin-top:46px; padding-top:20px; border-top:1px solid var(--line);
+  font-size:12.5px; color:var(--ink-45); font-family:var(--mono);
+  display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;
 }
 
-.sidenav a:hover {
-  color: #f1f1f1;
+/* scheduling button host */
+.sched-host{ margin-top:6px; }
+
+/* ============================= REVEAL ============================= */
+.reveal{ opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease; }
+.reveal.in{ opacity:1; transform:none; }
+@media (prefers-reduced-motion: reduce){
+  .reveal{ opacity:1; transform:none; transition:none; }
 }
 
-.main {
-  margin-left: 240px; /* Same as the width of the sidenav */
-  font-size: 14px; /* Increased text to enable scrolling */
-  padding: 0px 10px;
-}
-
-h2 {
-	font-size: 20px;
-}
-
-@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 12px;}
-  .sidenav a {font-size: 12px;}
+/* ============================= RESPONSIVE ============================= */
+@media (max-width:860px){
+  .hero{ grid-template-columns:1fr; }
+  .hero .portrait-wrap{ order:-1; width:180px; }
+  .about-grid{ grid-template-columns:1fr; }
+  .pillars-head{ grid-template-columns:1fr; }
+  .pillar-grid{ grid-template-columns:1fr; }
+  .evidence{ grid-template-columns:1fr; }
+  .two-col{ grid-template-columns:1fr; }
+  .join .wrap{ grid-template-columns:1fr; }
+  .foot-grid{ grid-template-columns:1fr; }
+  .section{ padding:60px 0; }
 }
 </style>
 </head>
-
-
 <body>
-<div class="sidenav">
-	<p>
-	<img padding="6px 8px 6px 16px" src="pic_sb_1_circ.png" width="160" >
-	<h2>Dr. Soumen Basu</h2>
-	</p>
-	<p>
-	PhD, IIT Delhi <br>
-	</p>
-  
-	<!--table>
-	<tr><td><bold>Email:</bold> <a color="#f1f1f1" href=mailto:soumen.basu@cse.iitd.ac.in>soumen.basu@cse.iitd.ac.in</td> </tr>
-	<tr><td><bold>Phone:</bold> +91 90515 01506</td> </tr>
-	</table -->
-  <a href="#about">About</a>
-  <a href="./CV_Soumen.pdf">Resume</a>
-  <a href="#publication">Publications</a>
-  <!--a href="#research">Research</a-->
-  <a href="#services">Services</a>
-  <a href="#activity">Recent Updates</a>
-  <a href="#teaching">Teaching</a>
-  <a href="#others">Others</a>
-  <a href="#meeting">Schedule Meeting</a>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <!--span class="nav-name">Soumen Basu</span-->
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#publications" >Selected Publications</a></li>
+      <li><a href="#updates">Updates</a></li>
+      <!--li><a href="#teaching">Teaching</a></li-->
+      <li><a href="#join"   class="highlight-tab">Join the lab</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="assets/CV_SoumenBasu.pdf">CV</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ============================= HERO ============================= -->
+<header class="wrap hero">
+  <div>
+    <h1>Soumen Basu</h1>
+    <div class="hero-eyebrow">Assistant Professor <br> Department of Artificial Intelligence <br> IIT KHARAGPUR</div>
+    <!--div class="role">Computer Vision &amp; Medical Image Analysis</div-->
+    <div class="hero-meta">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+      Room CET 020, Takshashila (1st Floor), IIT Kharagpur
+    </div>
+    <div class="hero-cta">
+      <a class="btn primary" href="mailto:soumen@ai.iitkgp.ac.in">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+        soumen@ai.iitkgp.ac.in
+      </a>
+      <a class="btn" href="https://scholar.google.com/citations?user=RPj75XMAAAAJ" target="_blank" rel="noopener">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l10 6.5-10 6.5-10-6.5z"></path><path d="M22 8.5v7"></path><path d="M6 10.6v5.4c0 1.9 2.7 3.5 6 3.5s6-1.6 6-3.5v-5.4"></path></svg>
+        Google Scholar
+      </a>
+      <a class="btn" href="https://www.linkedin.com/in/basusoumen" target="_blank" rel="noopener">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+        LinkedIn
+      </a>
+      <!-- <a class="btn" href="assets/CV_SoumenBasu.pdf" target="_blank">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+        Download CV
+      </a> -->
+    </div>
+    <!--p class="thesis">I build diagnostic AI that clears the bar at CVPR, MICCAI and The&nbsp;Lancet — and still runs on a low-cost ultrasound machine in a district hospital. Scaling AI's reach matters as much as scaling its parameters.</p-->
+    
+  </div>
+  <div class="portrait-wrap">
+    <div class="bracket"><span class="c2"></span>
+      <img class="portrait-img" src="assets/pic_sb_1_circ.png" alt="Portrait of Dr. Soumen Basu">
+    </div>
+    <!--div class="portrait-cap"><b>PI</b> · Vision &amp; Translational AI, IIT Kharagpur</div-->
+  </div>
+</header>
+
+<!-- ============================= OPEN POSITIONS ALERT ============================= -->
+<div class="wrap alert-wrap reveal">
+  <div class="alert-box">
+    
+    <div>🚀&nbsp;&nbsp;<strong>Open Positions —</strong> I'm actively looking for motivated PhD, Master's, and senior UG students to join my research lab. <a href="#join"><strong>Please See Details → </strong></a>  </div>
+  </div>
 </div>
 
-<div class="main">
-	<h2>Contact</h2>
-	<table>
-        <tr><td><bold>Email:</bold> </td> <td> <a href="mailto:mail.basu.s@gmail.com">mail.basu.s@gmail.com</a> </td></tr>
-	<tr><td><bold>Phone:</bold>  </td> <td> +1 646 842 6728 </td></tr>
-	<tr><td><bold> WhatsApp:</bold> </td> <td> +91 9051501506</td> </tr>
-	<tr><td><bold>Office:</bold>  </td> <td> Floor 43, 50 Hudson Yards, New York, NY 10001 </td></tr>
-    <tr><td><bold>Social Media:</bold>  </td> <td> <a href="https://www.linkedin.com/in/basusoumen">LinkedIn</a> &nbsp; 
-            <a href="https://scholar.google.com/citations?user=RPj75XMAAAAJ">Google Scholar</a> </td></tr>
-	</tr>
-	<tr><td></td><td></td></tr>
-	<tr><td>
-		<!-- Google Calendar Appointment Scheduling begin -->
-		<link href="https://calendar.google.com/calendar/scheduling-button-script.css" rel="stylesheet">
-		<script src="https://calendar.google.com/calendar/scheduling-button-script.js" async></script>
-		<script>
-		(function() {
-		  var target = document.currentScript;
-		  window.addEventListener('load', function() {
-		    calendar.schedulingButton.load({
-		      url: 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ1I2gRQYyTb_IhpE7h6oJ0nwAY3ybTbNGwd-vpFJcWSrSU2EhWvc710fmujCU13Ne2HRUzdeGJu?gv=true',
-		      color: '#039BE5',
-		      label: 'Schedule an Appointment',
-		      target,
-		    });
-		  });
-		})();
-		</script>
-		<!-- end Google Calendar Appointment Scheduling -->
-	</td></tr>
-	</table>
-	<hr>
-	<h2 id="about">
-	About 
-	</h2>
-    	<p>
-	Dr. Soumen Basu works in Computer Vision, Deep Learning, and Medical Image Analysis. He is particularly interested in learning with limited supervised data for safety-critical tasks. 
-	He completed his PhD at the Indian Institute of Technology (IIT) Delhi, where he pioneered AI-based models for detecting gallbladder cancer from ultrasound images. 
-	His innovative work has been published in top-tier conferences such as CVPR, MICCAI, and WACV as well as renowned journals like The Lancet Regional Health and Medical Image Analysis.
-	</p>
-	<p>
-	Dr. Basu is currently a <i> Research Scientist </i> at Meta New York, working in developing state-of-the-art Large Foundation Models for the Monetization teams. 
-	Prior to joining Meta, he was a <i>Senior Chief Engineer</i> at Samsung Research Bangalore, leading research in on-device Foundation Models for video and image-based segmentation. 
-	His previous experience includes roles at Adobe Systems and Penn State University.
-	Dr. Basu has been awarded prestigious honors such as the <i>Prime Minister's Research Fellowship</i> and the <i>Outstanding Teaching Assistant Award</i> at IIT Delhi. 
-	He was also a recipient of the <i>MICCAI STAR Award</i> (2022). 
-	</p>
-    <p><b> <a href="./CV_Soumen.pdf">CV/ Resume</a> </b></p> 
-    <p> <a href="#meeting">Schedule a Meeting</a> </p> 
-    <hr>
-	<p>
-	<h2 id="publication">
-	Publications
-	</h2>
-	<ul style="list-style-type:square;">
-	<li> 
-		<b>Surpassing the Human Accuracy: Detecting Gallbladder Cancer from USG Images with Curriculum Learning </b>
-		<br>
-        <b>Soumen Basu</b>, Mayank Gupta, Pratyaksha Rana, Pankaj Gupta, Chetan Arora
-        <br>
-        IEEE International Conference on Computer Vision and Pattern Recognition (CVPR), June 2022.
-        <br>
-        [&nbsp;<a href="https://openaccess.thecvf.com/content/CVPR2022/papers/Basu_Surpassing_the_Human_Accuracy_Detecting_Gallbladder_Cancer_From_USG_Images_CVPR_2022_paper.pdf">Paper</a>, &nbsp;<a href="https://gbc-iitd.github.io/gbcnet">Webpage</a>&nbsp;]  
-	</li> 
-	<br>
-	<li> 
-        <b> Unsupervised Contrastive Learning of Image Representations from Ultrasound Videos using Hard Negative Mining</b>
-		<br>
-        <b>Soumen Basu</b>, Somanshu Singla, Mayank Gupta, Pratyaksha Rana, Pankaj Gupta, Chetan Arora
-        <br>
-        25th International Conference on Medical Image Computing and Computer Assisted Intervention (MICCAI), September 2022.
-        <br>
-        [&nbsp;<a href="https://arxiv.org/pdf/2207.13148.pdf">Arxiv</a>, &nbsp;<a href="https://gbc-iitd.github.io/usucl">Webpage</a>&nbsp;]
-	</li>
-    <br>
-	<li> 
-    <b>RadFormer: Transformers with Global-Local Attention for Interpretable and Accurate Gallbladder Cancer Detection </b>
-		<br>
-        <b>Soumen Basu</b>, Mayank Gupta, Pratyaksha Rana, Pankaj Gupta, Chetan Arora
-        <br>
-        Elsevier Medical Image Analysis (Impact Factor: 13.828)
-        <br>
-        [&nbsp;<a href="https://doi.org/10.1016/j.media.2022.102676">Paper</a>, &nbsp;<a href="https://arxiv.org/abs/2211.04793">Arxiv</a>, &nbsp;<a href="https://github.com/sbasu276/RadFormer">Github</a>&nbsp;] 
-	</li>
-    <br>
-    <li> 
-    <b>Gallbladder Cancer Detection from US Images using only Image Level Labels</b>
-		<br>
-        <b>Soumen Basu</b>, Ashish Papanai, Mayank Gupta, Pankaj Gupta, Chetan Arora
-        <br>
-        26th International Conference on Medical Image Computing and Computer Assisted Intervention (MICCAI), October 2023.
-        <br>
-        [&nbsp;<a href="https://arxiv.org/pdf/2309.05261">Arxiv</a>, &nbsp;<a href="https://gbc-iitd.github.io/wsod-gbc">Webpage</a>&nbsp;] 
-	</li>    
-    <br>
-    <li> 
-    <b>How reliable are the metrics used for assessing reliability in medical imaging?</b>
-		<br>
-        Mayank Gupta,<b> Soumen Basu</b>, Chetan Arora
-        <br>
-        26th International Conference on Medical Image Computing and Computer Assisted Intervention (MICCAI), October 2023 (Oral selection).
-        <br>
-        [&nbsp;<a href="https://doi.org/10.1007/978-3-031-43898-1_15">Paper</a>, &nbsp;<a href="https://github.com/MayankGupta73/Robust-Calibration">Github</a>&nbsp;] 
-	</li> 
-    <br>
-    <li> 
-    <b>Deep-learning enabled ultrasound based detection of gallbladder cancer in northern India: a prospective diagnostic study</b>
-		<br>
-        Pankaj Gupta, <b>Soumen Basu</b>, et al.
-        <br>
-        The LANCET Regional Health, South-East Asia, 2023. (Impact Factor: 5.0)
-        <br>
-        [&nbsp;<a href="https://doi.org/10.1016/j.lansea.2023.100279">Paper</a>&nbsp;]
-	</li> 
-  <br>
-    <li> 
-      <b>Deep learning models for differentiation of xanthogranulomatous cholecystitis and gallbladder cancer on ultrasound</b>
-      <br>
-          Pankaj Gupta, <b>Soumen Basu</b>, et al.
-          <br>
-          Indian Journal of Gastroenterology, 2023. (Impact Factor: 2.0)
-          <br>
-          [&nbsp;<a href="https://link.springer.com/article/10.1007/s12664-023-01483-0">Paper</a>&nbsp;]
-    </li> 
-  <br>
-  <li> 
-    <b>Applications of artificial intelligence in biliary tract cancers</b>
-    <br>
-        Pankaj Gupta, <b>Soumen Basu</b>,  Chetan Arora
-        <br>
-        Indian Journal of Gastroenterology, 2024. (Impact Factor: 2.0)
-        <br>
-        [&nbsp;<a href="https://link.springer.com/article/10.1007/s12664-024-01518-0">Paper</a>&nbsp;]
-  </li> 
-	  <br>
-	    <li> 
-	      <b>FocusMAE: Gallbladder Cancer Detection from Ultrasound Videos with Focused Masked Autoencoders</b>
-	      <br>
-		    <b>Soumen Basu</b>, Mayuna Gupta, Chetan Madan, Pankaj Gupta,  Chetan Arora
-		    <br>
-	          IEEE International Conference on Computer Vision and Pattern Recognition (CVPR), June 2024.
-	          <br>
-	          [&nbsp;<a href="https://openaccess.thecvf.com/content/CVPR2024/html/Basu_FocusMAE_Gallbladder_Cancer_Detection_from_Ultrasound_Videos_with_Focused_Masked_CVPR_2024_paper.html">Paper</a>, &nbsp;<a href="https://gbc-iitd.github.io/focusmae">Webpage</a>&nbsp;]
-	    </li>  
-   	<br>
-    	<li> 
-      		<b>LQ-Adapter: ViT-Adapter with Learnable Queries for Gallbladder Cancer Detection from Ultrasound Images</b>
-      		<br>
-      		Chetan Madan, Mayuna Gupta, <b>Soumen Basu</b>, Pankaj Gupta,  Chetan Arora
-          	<br>
-          	IEEE/ CVF Winter Conference on Applications of Computer Vision (WACV), February 2025.
-          	<br>
-          	[&nbsp;<a href="https://arxiv.org/pdf/2412.00374?">Paper</a>, &nbsp;<a href="https://github.com/ChetanMadan/LQ-Adapter">Code</a>&nbsp;]
-    	</li>
-    	<br>
-	<li> 
-		<b>Focus on Texture: Rethinking Pre-training in Masked Autoencoders for Medical Image Classification</b>
-		<br>
-		Chetan Madan, Aarjav Satia, <b>Soumen Basu</b>, Pankaj Gupta, Usha Dutta, Chetan Arora
-		<br>
-		28th International Conference on Medical Image Computing and Computer Assisted Intervention (MICCAI), September 2025.
-		<br>
-		[&nbsp;<a href="https://arxiv.org/pdf/2507.10869">Paper</a>, &nbsp;<a href="https://github.com/ChetanMadan/GLCM-MAE">Code</a>&nbsp;]
-		</li>  
-	</ul>
-	</p>
-	<!--hr>
-	<h2 id="research">
-	Research	
-	</h2>
-	<p>
-	My research in IIT Delhi specifically aims to tackle the problem of Gallbladder Cancer (GBC) detection from abdominal ultrasound (USG) images. Through my research, I expect to develop the automated processing of USG images in general and understand the objective characterization of gallbladder malignancy in USG images. Gallbladder cancer is an important problem for Indian population. It's one of the leading causes of cancer-related deaths in Indian women. >In the Northern parts of India, the incidence rate is comparable to the global highest. GBC causes about 165,000 deaths every year, worldwide. The disease is often detected late and has an average survival duration of only six months. AI-assisted detection of gallbladder malignancy signs in USG would result in early detection and ameliorate the bleak survival scenario. Following are some of my works.
-	</p-->
-	<hr>
-	<h2 id="services">
-	Services
-	</h2>
-	<ul style="list-style-type:circle;">
-        <li> Reviewer, CVPR 2023, 2024, 2026 </li>
-		<li> Reviewer, IJCV 2025, 2026 </li>
-		<li> Reviewer, Nature Digital Medicine, 2025 </li>
-		<li> Reviewer, Nature Scientific Reports, 2025 </li>
-		<li> Reviewer, MICCAI 2024 </li>
-        <li> Reviewer, ECCV 2024 </li>
-        <li> Reviewer, WACV 2024, 2025 </li>
-        <li> Reviewer, IJCAI 2024 </li>
-        <li> Reviewer, ICCV 2023 </li>
-        <li> Reviewer, IPCAI 2023 </li>
-        <li> Program Committee Member, AAAI 2023, AAAI 2024 </li>
-	</ul>
+<!-- ============================= ABOUT ============================= -->
+<section class="section reveal" id="about">
+  <div class="wrap">
+    <div class="eyebrow"><span class="tag"><strong>ABOUT</strong></span><span class="rule"></span></div>
+    <!--h2 class="title" style="margin-bottom:36px;">From ultrasound probes to production models</h2-->
+      <div>
+        <p>I work broadly in Computer Vision, Deep Learning, and AI in Healthcare, with a particular interest in learning from limited, 
+          noisy supervision for safety-critical tasks. I pioneered deep neural network models for detecting gallbladder cancer from ultrasound. 
+          My research has been published at leading venues such as CVPR, MICCAI, WACV and in Medical Image Analysis, The Lancet Regional Health, 
+          and Indian J. of Gastroenterology. Our work was covered by 
+          <a href="https://www.news-medical.net/news/20230913/Robust-detection-of-gallbladder-cancer-using-deep-learning-assisted-US-imaging.aspx">News Medical</a>, 
+          <a href="https://www.newindianexpress.com/xplore/2023/Sep/12/news-capsules-study-finds-that-ai-can-detect-gallbladder-cancer-accurately-2613922.html">The Indian Express</a>, 
+          <a href="https://health.economictimes.indiatimes.com/news/health-it/artificial-intelligence-detects-gallbladder-cancer-as-accurately-as-radiologists-in-india-lancet-study/103574231">The Economic Times</a>, 
+          and <a href="https://www.business-standard.com/india-news/ai-detects-gallbladder-cancer-as-accurately-as-radiologists-in-india-study-123091100362_1.html">Business Standard</a>.
+        </p>
+        <p>Before joining IIT Kharagpur, I was a Research Scientist at Meta in New York, working on Model Scalability Innovations in the Foundational AI area. Earlier roles took me through Samsung R&amp;D, Amazon, and Adobe — industry experience that shaped how I think about translational aspects of AI research.</p>
+        <p>Now, as an Assistant Professor at the Department of Artificial Intelligence, IIT Kharagpur, I am working on computer vision and intelligence for translational applications such as healthcare for Indian context.</p>
+        <!--ul class="facts">
+        <li><span class="k">PhD</span><span class="v">Computer Science, IIT Delhi</span></li>
+        <li><span class="k">Prior</span><span class="v">Research Scientist, Meta, New York</span></li>
+        <li><span class="k">Industry</span><span class="v">Samsung R&amp;D · Amazon · Adobe</span></li>
+        <li><span class="k">Fellowship</span><span class="v">Prime Minister's Research Fellowship</span></li>
+        <li><span class="k">Award</span><span class="v">MICCAI STAR Award, 2022</span></li>
+        <li><span class="k">Press</span><span class="v">News Medical · Indian Express · Economic Times · Business Standard</span></li>
+        <li><span class="k">Reviewer</span><span class="v">CVPR · ICCV · ECCV · AAAI · MICCAI · Nature Digital Medicine · Scientific Reports · IJCV</span></li>
+      </ul-->
+      </div>
+    </div>
+  </div>
+</section>
 
-	<hr>
-	<h2 id="activity">
-	Recent Updates
-	</h2>
-	<ul style="list-style-type:circle;">
-		<li> [01/2026] Serving as Reviewer, IJCV and CVPR 2026
-		<li> [12/2025] Talk at IIT-Hyd on Video-based GBC Detection. Thank you, IIT-Hyd!
-		<li> [09/2025] Talk at IIT-KGP, Dept of CSE, on GBC Detection with Curriculum and SSL. Thank you, IIT-KGP!
-		<li> [07/2025] Serving as Reviewer, Nature Digital Medicine</li>
-		<li> [06/2025] Serving as Reviewer, IJCV
-		<li> [05/2025] GLCM-based MAE is accepted at MICCAI 2025!
-		<li> [04/2025] Serving as Reviewer, Nature Scientific Reports </li>
-    	<li> [02/2025] Joined Meta New York as a Research Scientist!
-		<li> [12/2024] Patent on Temporally Stable Person Segmentation is accepted as A1 at Samsung, will be filed at USPTO. </li>
-		<li> [10/2024] LQ-Adapter is Accepted as Oral at WACV 2025! </li>
-		<li> [09/2024] LQ-Adapter is accepted at WACV 2025 (round 1)! </li>
-		<li> [08/2024] Convocated from IIT Delhi! </li>
-        <li> [07/2024] Successfully Defended Ph.D. Thesis on 29-July-2024!! </li>
-        <li> [07/2024] Serving as Reviewer at WACV 2025 </li>
-        <li> [06/2024] Attended CVPR 2024 in-person (Thanks CSE, IITD for funding!) </li>
-        <li> [05/2024] Serving as Reviewer at MICCAI 2024 </li> 
-        <li> [04/2023] Serving as Reviewer at ECCV 2024 </li> 
-        <li> [03/2024] Started working with Samsung Research Bangalore as a Senior Chief Engineer (Visual Intelligence Team) </li>
-        <li> [02/2024] Ph.D. Thesis submitted! </li>
-        <li> [02/2024] FocusMAE is accepted at CVPR 2024! </li>
-        <li> [01/2024] Ph.D. Synopsis presented </li>
-        <li> [11/2023] Serving as Reviewer at CVPR 2024 </li> 
-        <li> [11/2023] Paper accepted at Indian Journal of Gastroenterology </li> 
-        <li> [10/2023] Attended MICCAI 2023 in person and presented both Poster and Oral papers </li> 
-        <li> [08/2023] Paper accepted at LANCET Regional Health! </li> 
-        <li> [08/2023] Serving as Reviewer at WACV 2024 </li> 
-        <li> [08/2023] Received Outstanding Teaching Assistant Award for Machine Learning course!</li>
-        <li> [07/2023] Started working as an Applied Scientist Intern at Amazon </li> 
-        <li> [06/2023] Two papers accepted at MICCAI 2023! </li> 
-        <li> [04/2023] Serving as Reviewer in ICCV 2023 </li> 
-        <li> [01/2023] Attending Google Research Week 2023 at Bangalore </li>
-        <li> [11/2022] Serving as Reviewer in CVPR 2023 and IPCAI 2023 </li> 
-        <li> [11/2022] Gave a talk at Ph.D. Seminar of Department of CSE, IIT Delhi </li>
-        <li> [10/2022] RadFormer is Accepted at Elsevier Medical Image Analysis (IF: 13.828)! </li>
-        <li> [09/2022] Served as Program Committee Member, AAAI 2023 </li>
-        <li> [06/2022] Attended MICCAI 2022 in person and presented our paper. </li>
-        <li> [06/2022] Received MICCAI student travel award! </li>
-        <li> [06/2022] Contrastive Learning is accepted for publication in MICCAI 2022! (Acceptance Rate: ~31%) </li>
-        <li> [06/2022] Attended CVPR 2022 in person and presented GBCNet. </li>
-        <li> [05/2022] Received CVPR DEI travel grant! </li>
-        <li> [03/2022] GBCNet is accepted for publication in IEEE/CVF CVPR 2022! (Acceptance Rate: ~25%) </li>
-        <li> [07/2021] Passed Ph.D. Comprehensive and moved to candidacy. </li>
-        <li> [07/2021] Attended UCL Medical Image Computing Summer School (MedICSS), London, 2021 (Nominated by the Department, sponsored by IIT Delhi) </li>
-        <li> [05/2021] Received the Pime Minister's Research Fellowship, Government of India, December 2020 </li>
-        <li> [12/2020] Winner (2<sup>nd</sup> Position) in ICVGIP-2020 Object Detection Challenge </li>
-        <li> [12/2020] Attended ICVGIP, 2020, hosted by IIT Jodhpur</li>
-        <li> [12/2020] Attended Amazon Research Day, 2020 (Virtual)</li>
-        <li> [07/2020] Attended ICML, 2020 (Virtual)</li>
-        <!--li> Runner-up in Xerox Innovation Challenge (IIT Delhi, 2014) </li-->
-	</ul>
-	<hr>
-	<h2 id="teaching">
-	Teaching
-	</h2>
-	<p> I have been a Teaching Assistant to the following courses. My responsibilities involved conducting lab sessions, assignment design, grading the assignments and exams.  
-	</p>
-	<ul style="list-style-type:circle;">
-    <li> Machine Learning (COL341) [Received Outstanding TA Award] </li>
-    <li> Cloud Computing Fundamentals (COL 733) </li>
-    <li> Computer Vision (COL 780) </li>
-    <li> Intro. to Computing (COL 100) </li>
-    <li> Artificial Intelligence (COL 671) </li>
-    <li> Software Engineering (COL 740) </li>
-    <li> Data Structures and Algorithms (COL 106) </li>
-	</ul>
-	<hr>
-	<h2 id="others">
-	Others
-	</h2>
-	<ul style="list-style-type:circle;">
-		<li> <a href="https://www.cse.iitd.ac.in/~soumen/vision-lab/instructions.html">Instructions for using Vision Lab resources</a> </li>
-        <li> <a href="https://www.cse.iitd.ac.in/~soumen/misc/report-iitd-cse.zip">Template for Dissertation (CSE, IITD)</a> </li>
-        <li> <a href="https://www.cse.iitd.ac.in/~soumen/misc/server-admin/server.zip">Useful Scripts and Commands for Server Management</a> </li>
-	</ul>
-	</p>
-    <hr>
-    <h2 id="meeting">
-    Schedule a Meeting
-    </h2>
-    <!-- Calendly inline widget begin -->
-    <!--div class="calendly-inline-widget" data-url="https://calendly.com/soumen_basu/meet" style="min-width:320px;height:630px;"></div>
-    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
-    <!-- Calendly inline widget end -->
-	<!-- Google Calendar Appointment Scheduling begin -->
-	<link href="https://calendar.google.com/calendar/scheduling-button-script.css" rel="stylesheet">
-	<script src="https://calendar.google.com/calendar/scheduling-button-script.js" async></script>
-	<script>
-	(function() {
-	  var target = document.currentScript;
-	  window.addEventListener('load', function() {
-	    calendar.schedulingButton.load({
-	      url: 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ1I2gRQYyTb_IhpE7h6oJ0nwAY3ybTbNGwd-vpFJcWSrSU2EhWvc710fmujCU13Ne2HRUzdeGJu?gv=true',
-	      color: '#039BE5',
-	      label: 'Schedule an Appointment',
-	      target,
-	    });
-	  });
-	})();
-	</script>
-<!-- end Google Calendar Appointment Scheduling -->
-</div>
+<!-- ============================= RESEARCH PILLARS ============================= -->
+<section class="section reveal" id="research">
+  <div class="wrap">
+    <div class="eyebrow"><span class="tag"><strong>RESEARCH</strong></span><span class="rule"></span></div>
+    <!--div class="pillars-head">
+      <h2 class="title">Four bets on accessible AI</h2-->
+    <p>My research philosophy lies in the belief that scaling parameters isn't the only frontier — but scaling who AI actually reaches, is. The following are some of the threads I am actively working on:  </p>
+    <!--/div-->
+   
+    <div class="pillar">
+      <div class="pillar-top"><span class="tag">LEL</span><h3>Label-Efficient Learning</h3></div>
+      <p>Semi- and self-supervised techniques that pull relevant features out of noisy, sparsely labelled data. Efforts include leveraging novel techniques, investigating generative AI, and also frontier world-model approaches.</p>
+    </div>
+    <br>
+     <div class="pillar">
+      <div class="pillar-top"><span class="tag">ADD</span><h3>Automated Disease Detection</h3></div>
+      <p>Investigating novel techniques for automated disease detection in medical imaging. Emphasis is placed on developing robust and accurate models for Cancer/ other relevant disease diagnosis for indian population.</p>
+    </div>
+    <br>
+    <div class="pillar">
+      <div class="pillar-top"><span class="tag">EDGE</span><h3>Efficient / Low-Resource AI</h3></div>
+      <p>Lightweight architectures for offline and edge deployment — low latency, low energy, privacy-preserving — so real-time diagnostics can run on point-of-care devices in rural clinics.</p>
+    </div>
+    <br>
+    <div class="pillar">
+      <div class="pillar-top"><span class="tag">XAI</span><h3>Explainable AI</h3></div>
+      <p>I am exploring how to design domain-specific saliency methods and standardized metrics to understand how well the explanations align with domain-knowledge relevance and real decisions.</p>
+    </div>
+    <br>
+    <div class="pillar">
+      <div class="pillar-top"><span class="tag">TAI</span><h3>Trustworthy AI</h3></div>
+      <p>Anchoring generative AI to reality, validating diagnostic systems so they stay safe, calibrated, and ethically sound.</p>
+    </div>
 
+    <!--div class="pillar-grid">
+      <div class="pillar">
+        <div class="pillar-top"><span class="tag">LE</span><h3>Label-Efficient Learning</h3></div>
+        <p>Semi- and self-supervised techniques that pull clinically relevant features out of noisy, sparsely labelled data — including a look at frontier world-model approaches as a route to structure without labels.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-top"><span class="tag">XAI</span><h3>Explainable AI</h3></div>
+        <p>"Black-box" decisions aren't acceptable in healthcare. I design disease-specific saliency methods and standardized metrics for how well explanations align with clinical relevance and real decisions.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-top"><span class="tag">REL</span><h3>Reliability &amp; Trust</h3></div>
+        <p>Anchoring generative imagination to physical reality, and validating diagnostic systems so they stay safe, calibrated, and ethically sound once they leave the lab and enter clinical use.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-top"><span class="tag">EDGE</span><h3>Efficient / Low-Resource AI</h3></div>
+        <p>Lightweight architectures for offline and edge deployment — low latency, low energy, privacy-preserving — so real-time diagnostics can run on point-of-care devices in rural clinics.</p>
+      </div>
+    </div>
+
+    <!--div class="evidence">
+      <img src="assets/cam.png" alt="Class activation map from earlier gallbladder cancer detection research, highlighting malignant regions on ultrasound frames">
+      <div>
+        <div class="cap-title">A bounding box, in this line of work, can mean a diagnosis.</div>
+        <div class="cap-body">Localizing malignancy on ultrasound frames — the kind of explainable, region-grounded output that later work on saliency and reliability metrics is built to evaluate and trust.</div>
+      </div>
+    </div-->
+  </div>
+</section>
+
+<!-- ============================= PUBLICATIONS ============================= -->
+<section class="section reveal" id="publications">
+  <div class="wrap">
+    <div class="eyebrow"><span class="tag"><strong>PUBLICATIONS</strong></span><span class="rule"></span></div>
+    <h2 class="title" style="margin-bottom:8px;">Selected Publications</h2>
+    <p class="lede" style="margin-bottom:8px;">Full list on <a href="https://scholar.google.com/citations?user=RPj75XMAAAAJ" target="_blank" rel="noopener">Google Scholar</a>.</p>
+
+    <div class="pub">
+      <div class="venue">CVPR<br>2022</div>
+      <div>
+        <h4>Surpassing the Human Accuracy: Detecting Gallbladder Cancer from USG Images with Curriculum Learning</h4>
+        <div class="authors"><b>Soumen Basu</b>, Mayank Gupta, Pratyaksha Rana, Pankaj Gupta, Chetan Arora</div>
+        <div class="links"><a href="https://openaccess.thecvf.com/content/CVPR2022/papers/Basu_Surpassing_the_Human_Accuracy_Detecting_Gallbladder_Cancer_From_USG_Images_CVPR_2022_paper.pdf" target="_blank" rel="noopener">Paper</a><a href="https://gbc-iitd.github.io/gbcnet" target="_blank" rel="noopener">Webpage</a></div>
+      </div>
+    </div>
+
+    <div class="pub">
+      <div class="venue">MICCAI<br>2022</div>
+      <div>
+        <h4>Unsupervised Contrastive Learning of Image Representations from Ultrasound Videos using Hard Negative Mining</h4>
+        <div class="authors"><b>Soumen Basu</b>, Somanshu Singla, Mayank Gupta, Pratyaksha Rana, Pankaj Gupta, Chetan Arora</div>
+        <div class="links"><a href="https://arxiv.org/pdf/2207.13148.pdf" target="_blank" rel="noopener">Arxiv</a><a href="https://gbc-iitd.github.io/usucl" target="_blank" rel="noopener">Webpage</a></div>
+      </div>
+    </div>
+
+    <div class="pub">
+      <div class="venue">Medical Image<br>Analysis</div>
+      <div>
+        <h4>RadFormer: Transformers with Global-Local Attention for Interpretable and Accurate Gallbladder Cancer Detection</h4>
+        <div class="authors"><b>Soumen Basu</b>, Mayank Gupta, Pratyaksha Rana, Pankaj Gupta, Chetan Arora — <em>Impact Factor 14.0</em></div>
+        <div class="links"><a href="https://doi.org/10.1016/j.media.2022.102676" target="_blank" rel="noopener">Paper</a><a href="https://arxiv.org/abs/2211.04793" target="_blank" rel="noopener">Arxiv</a><a href="https://github.com/sbasu276/RadFormer" target="_blank" rel="noopener">Github</a></div>
+      </div>
+    </div>
+
+    <div class="pub">
+      <div class="venue">MICCAI<br>2023</div>
+      <div>
+        <h4>Gallbladder Cancer Detection from US Images using only Image Level Labels</h4>
+        <div class="authors"><b>Soumen Basu</b>, Ashish Papanai, Mayank Gupta, Pankaj Gupta, Chetan Arora</div>
+        <div class="links"><a href="https://arxiv.org/pdf/2309.05261" target="_blank" rel="noopener">Arxiv</a><a href="https://gbc-iitd.github.io/wsod-gbc" target="_blank" rel="noopener">Webpage</a></div>
+      </div>
+    </div>
+
+    <div class="pub">
+      <div class="venue">MICCAI<br>2023 · Oral</div>
+      <div>
+        <h4>How Reliable are the Metrics used for Assessing Reliability in Medical Imaging?</h4>
+        <div class="authors">Mayank Gupta, <b>Soumen Basu</b>, Chetan Arora</div>
+        <div class="links"><a href="https://doi.org/10.1007/978-3-031-43898-1_15" target="_blank" rel="noopener">Paper</a><a href="https://github.com/MayankGupta73/Robust-Calibration" target="_blank" rel="noopener">Github</a></div>
+      </div>
+    </div>
+
+    <div class="pub">
+      <div class="venue">Lancet Regional<br>Health SEA, 2023</div>
+      <div>
+        <h4>Deep-Learning Enabled Ultrasound Based Detection of Gallbladder Cancer in Northern India: A Prospective Diagnostic Study</h4>
+        <div class="authors">Pankaj Gupta, <b>Soumen Basu</b>, et al. — <em>Impact Factor 6.4</em></div>
+        <div class="links"><a href="https://doi.org/10.1016/j.lansea.2023.100279" target="_blank" rel="noopener">Paper</a></div>
+      </div>
+    </div>
+
+    <div class="pub">
+      <div class="venue">Indian J.<br>Gastro., 2023</div>
+      <div>
+        <h4>Deep Learning Models for Differentiation of Xanthogranulomatous Cholecystitis and Gallbladder Cancer on Ultrasound</h4>
+        <div class="authors">Pankaj Gupta, <b>Soumen Basu</b>, et al. — <em>Impact Factor 2.1</em></div>
+        <div class="links"><a href="https://link.springer.com/article/10.1007/s12664-023-01483-0" target="_blank" rel="noopener">Paper</a></div>
+      </div>
+    </div>
+
+    <div class="pub">
+      <div class="venue">Indian J.<br>Gastro., 2024</div>
+      <div>
+        <h4>Applications of Artificial Intelligence in Biliary Tract Cancers</h4>
+        <div class="authors">Pankaj Gupta, <b>Soumen Basu</b>, Chetan Arora — <em>Impact Factor 2.1</em></div>
+        <div class="links"><a href="https://link.springer.com/article/10.1007/s12664-024-01518-0" target="_blank" rel="noopener">Paper</a></div>
+      </div>
+    </div>
+
+    <div class="pub">
+      <div class="venue">CVPR<br>2024</div>
+      <div>
+        <h4>FocusMAE: Gallbladder Cancer Detection from Ultrasound Videos with Focused Masked Autoencoders</h4>
+        <div class="authors"><b>Soumen Basu</b>, Mayuna Gupta, Chetan Madan, Pankaj Gupta, Chetan Arora</div>
+        <div class="links"><a href="https://openaccess.thecvf.com/content/CVPR2024/html/Basu_FocusMAE_Gallbladder_Cancer_Detection_from_Ultrasound_Videos_with_Focused_Masked_CVPR_2024_paper.html" target="_blank" rel="noopener">Paper</a><a href="https://gbc-iitd.github.io/focusmae" target="_blank" rel="noopener">Webpage</a></div>
+      </div>
+    </div>
+
+    <div class="pub">
+      <div class="venue">WACV<br>2025</div>
+      <div>
+        <h4>LQ-Adapter: ViT-Adapter with Learnable Queries for Gallbladder Cancer Detection from Ultrasound Images</h4>
+        <div class="authors">Chetan Madan, Mayuna Gupta, <b>Soumen Basu</b>, Pankaj Gupta, Chetan Arora</div>
+        <div class="links"><a href="https://arxiv.org/pdf/2412.00374" target="_blank" rel="noopener">Paper</a><a href="https://github.com/ChetanMadan/LQ-Adapter" target="_blank" rel="noopener">Code</a></div>
+      </div>
+    </div>
+
+    <div class="pub">
+      <div class="venue">MICCAI<br>2025</div>
+      <div>
+        <h4>Focus on Texture: Rethinking Pre-training in Masked Autoencoders for Medical Image Classification</h4>
+        <div class="authors">Chetan Madan, Aarjav Satia, <b>Soumen Basu</b>, Pankaj Gupta, Usha Dutta, Chetan Arora</div>
+        <div class="links"><a href="https://arxiv.org/pdf/2507.10869" target="_blank" rel="noopener">Paper</a><a href="https://github.com/ChetanMadan/GLCM-MAE" target="_blank" rel="noopener">Code</a></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================= RECOGNITION ============================= -->
+<section class="section reveal">
+  <div class="wrap">
+    <div class="eyebrow"><span class="tag"><strong>RECOGNITION</strong></span><span class="rule"></span></div>
+    <div class="badges">
+      <div class="badge"><span class="tag rust">2020</span>Prime Minister's Research Fellowship</div>
+      <div class="badge"><span class="tag rust">2022</span>MICCAI STAR Award</div>
+      <div class="badge"><span class="tag rust">2023</span>Outstanding Teaching Assistant Award, IIT Delhi</div>
+      <div class="badge"><span class="tag rust">2022</span>CVPR DEI Travel Grant</div>
+      <div class="badge"><span class="tag rust">2020</span>2nd Place, ICVGIP Object Detection Challenge</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= UPDATES / TIMELINE ============================= -->
+<section class="section reveal" id="updates">
+  <div class="wrap">
+    <div class="eyebrow"><span class="tag"><strong>UPDATES</strong></span><span class="rule"></span></div>
+    <h2 class="title" style="margin-bottom:36px;">Recent activity</h2>
+
+    <div class="timeline">
+      <div class="tl-item"><span class="date">07/2026</span><span class="txt">Joined IIT Kharapur, Dept. of AI as Assistant Professor.</span></div>
+      <div class="tl-item"><span class="date">06/2026</span><span class="txt">Serving as Reviewer, NeurIPS, WACV.</span></div>
+      <div class="tl-item"><span class="date">05/2026</span><span class="txt">Talk at IIT Kharagpur, Dept. of CSE.</span></div>
+      <div class="tl-item"><span class="date">04/2026</span><span class="txt">Paper Accepted at CVPRW 2026.</span></div>
+      <div class="tl-item"><span class="date">03/2026</span><span class="txt">Talk at IIT Kharagpur, Dept. of AI.</span></div>
+      <div class="tl-item"><span class="date">03/2026</span><span class="txt">Serving as Reviewer, MICCAI 2026.</span></div>
+      <div class="tl-item"><span class="date">01/2026</span><span class="txt">Serving as Reviewer, IJCV and CVPR 2026.</span></div>
+      <div class="tl-item"><span class="date">12/2025</span><span class="txt">Talk at IIT Hyderabad on video-based gallbladder cancer detection.</span></div>
+      <div class="tl-item"><span class="date">09/2025</span><span class="txt">Talk at IIT Kharagpur, Dept. of CSE, on GBC detection with curriculum learning and SSL.</span></div>
+      <div class="tl-item"><span class="date">07/2025</span><span class="txt">Serving as Reviewer, Nature Digital Medicine.</span></div>
+      <div class="tl-item"><span class="date">05/2025</span><span class="txt">GLCM-based MAE work accepted at MICCAI 2025.</span></div>
+      <div class="tl-item"><span class="date">02/2025</span><span class="txt">Joined Meta, New York, as a Research Scientist.</span></div>
+      <div class="tl-item"><span class="date">10/2024</span><span class="txt">LQ-Adapter accepted as Oral at WACV 2025.</span></div>
+      <div class="tl-item"><span class="date">08/2024</span><span class="txt">Convocated from IIT Delhi.</span></div>
+      <div class="tl-item"><span class="date">07/2024</span><span class="txt">Successfully defended PhD thesis (29 July 2024).</span></div>
+    </div>
+
+    <details class="more">
+      <summary>Show earlier updates</summary>
+      <div class="timeline" style="margin-top:16px;">
+        <div class="tl-item"><span class="date">06/2024</span><span class="txt">Serving as Reviewer, WACV 2025.</span></div>
+        <div class="tl-item"><span class="date">06/2024</span><span class="txt">Attended CVPR 2024 in person.</span></div>
+        <div class="tl-item"><span class="date">05/2024</span><span class="txt">Serving as Reviewer, MICCAI 2024.</span></div>
+        <div class="tl-item"><span class="date">03/2024</span><span class="txt">Joined Samsung Research Bangalore as Senior Chief Engineer, Visual Intelligence team.</span></div>
+        <div class="tl-item"><span class="date">02/2024</span><span class="txt">FocusMAE accepted at CVPR 2024; PhD thesis submitted.</span></div>
+        <div class="tl-item"><span class="date">11/2023</span><span class="txt">Serving as Reviewer, CVPR 2024; paper accepted at Indian Journal of Gastroenterology.</span></div>
+        <div class="tl-item"><span class="date">10/2023</span><span class="txt">Attended MICCAI 2023 in person; presented both poster and oral papers.</span></div>
+        <div class="tl-item"><span class="date">08/2023</span><span class="txt">Paper accepted at The Lancet Regional Health; received Outstanding TA Award for Machine Learning.</span></div>
+        <div class="tl-item"><span class="date">07/2023</span><span class="txt">Applied Scientist Intern, Amazon.</span></div>
+        <div class="tl-item"><span class="date">06/2023</span><span class="txt">Two papers accepted at MICCAI 2023.</span></div>
+        <div class="tl-item"><span class="date">10/2022</span><span class="txt">RadFormer accepted at Elsevier Medical Image Analysis (IF 13.8).</span></div>
+        <div class="tl-item"><span class="date">06/2022</span><span class="txt">Attended CVPR 2022 and MICCAI 2022 in person; presented GBCNet; received MICCAI student travel award.</span></div>
+        <div class="tl-item"><span class="date">03/2022</span><span class="txt">GBCNet accepted at CVPR 2022 (acceptance rate ~25%).</span></div>
+        <div class="tl-item"><span class="date">05/2021</span><span class="txt">Received the Prime Minister's Research Fellowship, Government of India.</span></div>
+        <div class="tl-item"><span class="date">12/2020</span><span class="txt">2nd Position, ICVGIP 2020 Object Detection Challenge, IIT Jodhpur.</span></div>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ============================= TEACHING / SERVICE ============================= -->
+<section class="section reveal" id="teaching">
+  <div class="wrap">
+    <div class="eyebrow"><span class="tag"><strong>SERVICE</strong></span><span class="rule"></span></div>
+    <!--div class="two-col">
+      <div>
+        <h3 style="font-size:18px;font-family:var(--sans);font-weight:600;margin-bottom:6px;">Teaching</h3>
+        <p style="font-size:14px;color:var(--ink-45);margin:0 0 16px;">As Teaching Assistant: lab sessions, assignment design, grading.</p>
+        <ul class="plain-list">
+          <li>Machine Learning <span class="yrs">COL341 · TA Award</span></li>
+          <li>Computer Vision <span class="yrs">COL780</span></li>
+          <li>Artificial Intelligence <span class="yrs">COL671</span></li>
+          <li>Cloud Computing Fundamentals <span class="yrs">COL733</span></li>
+          <li>Software Engineering <span class="yrs">COL740</span></li>
+          <li>Data Structures &amp; Algorithms <span class="yrs">COL106</span></li>
+          <li>Intro. to Computing <span class="yrs">COL100</span></li>
+        </ul>
+      </div-->
+      <div>
+        <!--h3 style="font-size:18px;font-family:var(--sans);font-weight:600;margin-bottom:6px;">Service</h3-->
+        <h3 style="font-size:18px;color:var(--ink);margin:0 0 16px;">Peer review &amp; program committees.</p>
+        <ul class="plain-list">
+          <li>CVPR <span class="yrs">2023 · 2024 · 2026</span></li>
+          <li>IJCV <span class="yrs">2025 · 2026</span></li>
+          <li>AAAI (PC Member) <span class="yrs">2023 · 2024 · 2027</span></li>
+          <li>Nature Digital Medicine <span class="yrs">2025 · 2026</span></li>
+          <li>Nature Precision Oncology <span class="yrs">2026</span></li>
+          <li>Nature Scientific Reports <span class="yrs">2025 · 2026</span></li>
+          <li>MICCAI <span class="yrs">2024 · 2026</span></li>
+          <li>ECCV <span class="yrs">2024 · 2026</span></li>
+          <li>WACV <span class="yrs">2024 · 2025 · 2026 · 2027</span></li>
+          <li>IJCAI <span class="yrs">2024</span></li>
+          <li>ICCV <span class="yrs">2023</span></li>
+          <li>IPCAI <span class="yrs">2023</span></li>
+        </ul>
+      </div>
+    <!--/div-->
+  </div>
+</section>
+
+<!-- ============================= JOIN THE LAB ============================= -->
+<section class="join" id="join">
+  <div class="wrap">
+    <div>
+      <span class="tag" style="color:#7fc9b7; font-size: 18px" ><strong>RECRUITING</strong></span>
+      <h2 style="margin-top:14px;">Looking for motivated Ph.D., Master's &amp; senior UG students.</h2>
+      
+      <p>Our research is primarily hands-on, application-oriented, and experimental in nature. If you are passionate about building robust AI systems that solve real-world problems, I would love to hear from you.</p>
+      
+      <p style="margin-top: 20px; font-weight: 600; color: #ffffff;">What I look for:</p>
+      <ul class="join-list">
+        <li><strong>Personality Traits (Non-negotiable):</strong> Sincere, honest, self-motivated, intellectually curious, resilient in debugging, and has a passion for building things.</li>
+        <li><strong>Technical Skills (Can be Developed on the Job):</strong> Programming proficiency (Python, PyTorch/TensorFlow), foundations on ML/ CV, and hands-on experience with training and evaluating deep learning models.</li>
+      </ul>
+
+      <p style="margin-top: 24px; font-weight: 600; color: #ffffff;">What I offer:</p>
+      <ul class="join-list">
+        <li><strong>Ownership &amp; Independence:</strong> You will have the space and autonomy to take ownership of your work, guiding your transition from a student into a strong professional.</li>
+        <li><strong>Mentorship:</strong> Academic rigor with industry best practices. I will actively help you groom essential skills like critical analysis, rigorous experimental design, academic writing, and scientific communication.</li>
+        <li><strong>Impactful Research:</strong> Access to real-world datasets and domain-experts, ensuring your work solves genuine challenges with actual deployment potential.</li>
+        <li><strong>Career Growth:</strong> Strong support for publishing in premier venues (CVPR, MICCAI, etc.), navigating the research-to-product pipeline.</li>
+        <li><strong>A Supportive Culture:</strong> I believe that great researchers are, first and foremost, good humans. I am committed to fostering an empathetic, collaborative, and inclusive lab environment where your well-being is valued alongside your academic excellence.</li>
+      </ul>
+
+      <p style="margin-top: 20px;">Please reach out with your CV, and a brief note on what specific problems you would like to work on.</p>
+      <a class="btn" href="mailto:soumen@ai.iitkgp.ac.in">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+      soumen@ai.iitkgp.ac.in
+    </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================= FOOTER / CONTACT ============================= -->
+<footer id="contact">
+  <div class="wrap">
+    <div class="eyebrow"><span class="tag">CONTACT</span><span class="rule"></span></div>
+    <div class="foot-grid">
+      <div>
+        <h3>Dr. Soumen Basu</h3>
+        <ul class="foot-list">
+          <li>Assistant Professor, Department of Artificial Intelligence</li>
+          <li>Indian Institute of Technology Kharagpur</li>
+          <li>Kharagpur, West Bengal 721302, India</li>
+          <li style="margin-top:10px;">
+            <a href="mailto:soumen@ai.iitkgp.ac.in" style="display:flex; align-items:center; gap:8px;">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+              soumen@ai.iitkgp.ac.in
+            </a>
+          </li>
+          <li>
+            <a href="https://www.linkedin.com/in/basusoumen" target="_blank" rel="noopener" style="display:flex; align-items:center; gap:8px;">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+              LinkedIn
+            </a>
+          </li>
+          <li>
+            <a href="https://scholar.google.com/citations?user=RPj75XMAAAAJ" target="_blank" rel="noopener" style="display:flex; align-items:center; gap:8px;">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l10 6.5-10 6.5-10-6.5z"></path><path d="M22 8.5v7"></path><path d="M6 10.6v5.4c0 1.9 2.7 3.5 6 3.5s6-1.6 6-3.5v-5.4"></path></svg>
+              Google Scholar
+            </a>
+          </li>
+        </ul>
+      </div>
+      <!--div>
+        <h3>Schedule a meeting</h3>
+        <p style="font-size:14px;color:var(--ink-70);margin:0 0 4px;max-width:40ch;">Prospective students &amp; collaborators are welcome to book time directly.</p>
+        <div class="sched-host">
+          <link href="https://calendar.google.com/calendar/scheduling-button-script.css" rel="stylesheet">
+          <script src="https://calendar.google.com/calendar/scheduling-button-script.js" async></script>
+          <script>
+          (function() {
+            var target = document.currentScript;
+            window.addEventListener('load', function() {
+              if (window.calendar && calendar.schedulingButton) {
+                calendar.schedulingButton.load({
+                  url: 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ1I2gRQYyTb_IhpE7h6oJ0nwAY3ybTbNGwd-vpFJcWSrSU2EhWvc710fmujCU13Ne2HRUzdeGJu?gv=true',
+                  color: '#0e6b58',
+                  label: 'Schedule an Appointment',
+                  target,
+                });
+              }
+            });
+          })();
+          </script>
+        </div>
+      </div-->
+    </div>
+    <div class="foot-note">
+      <span>© 2026 Soumen Basu</span>
+      <span>Built for IIT Kharagpur, Dept. of AI</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // single, restrained scroll-reveal — respects prefers-reduced-motion via CSS above
+  var els = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.08 });
+    els.forEach(function(el){ io.observe(el); });
+  } else {
+    els.forEach(function(el){ el.classList.add('in'); });
+  }
+</script>
 
 </body>
 </html>
-
-
